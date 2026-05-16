@@ -21,5 +21,6 @@ services:
       - DISPLAY_WIDTH=1280
       - DISPLAY_HEIGHT=720
       - KEEP_APP_RUNNING=1
+      - VNC_PASSWORD=${wizard_password:-}
     shm_size: "2gb"
     restart: unless-stopped
