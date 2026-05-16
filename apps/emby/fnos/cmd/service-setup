@@ -1,0 +1,26 @@
+#!/bin/bash
+APP_NAME=embyserver
+APP_DIR="${TRIM_APPDEST}"
+APP_DATA_DIR="${TRIM_PKGVAR}"
+
+LOG_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.log"
+PID_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.pid"
+
+### Package specific variables and functions
+### ----------------------------------------
+
+SERVICE_COMMAND="$APP_DIR/bin/emby-server $APP_DATA_DIR"
+SVC_BACKGROUND=y
+SVC_WRITE_PID=y
+
+service_preuninst() {
+    # 兜底：确保 EmbyServer 及可能残留的转码子进程被完全终止
+    pkill -x "EmbyServer" 2>/dev/null || true
+    sleep 1
+    pkill -9 -x "EmbyServer" 2>/dev/null || true
+}
+
+service_poststop() {
+    service_preuninst
+}
+

@@ -1,0 +1,9 @@
+# Build artifacts
+*.fpk
+*.tmp
+app.tgz
+dist/
+
+# macOS
+.DS_Store
+icons/**

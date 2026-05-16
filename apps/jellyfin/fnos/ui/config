@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "jellyfin.Application":
+        {
+            "title": "Jellyfin",
+            "desc": "Jellyfin",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "8097",
+            "protocol": "http",
+            "url": "/web/index.html",
+            "allUsers": true
+        }
+    }
+}

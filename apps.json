@@ -1,0 +1,39 @@
+{
+  "apps": [
+    {
+      "name": "openlist",
+      "display_name": "OpenList",
+      "description": "文件列表/WebDAV服务器"
+    },
+    {
+      "name": "firefox",
+      "display_name": "Firefox",
+      "description": "远程浏览器"
+    },
+    {
+      "name": "moviepilot",
+      "display_name": "MoviePilot",
+      "description": "影视自动化管理工具"
+    },
+    {
+      "name": "emby",
+      "display_name": "Emby",
+      "description": "媒体服务器"
+    },
+    {
+      "name": "jellyfin",
+      "display_name": "Jellyfin",
+      "description": "开源媒体系统"
+    },
+    {
+      "name": "plex",
+      "display_name": "Plex",
+      "description": "媒体服务器"
+    },
+    {
+      "name": "qBittorrent",
+      "display_name": "qBittorrent",
+      "description": "BitTorrent客户端"
+    }
+  ]
+}

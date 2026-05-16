@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "moviepilot.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "moviepilot",
+                "permission": {
+                    "rw": [
+                        "moviepilot"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "moviepilot",
+                "path": "docker"
+            }
+        ]
+    }
+}

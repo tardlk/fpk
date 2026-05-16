@@ -1,0 +1,46 @@
+#!/bin/bash
+
+LOG_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.log"
+PID_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.pid"
+
+APP_NAME=plexmediaserver
+APP_DIR="${TRIM_APPDEST}"
+APP_DATA_DIR="${TRIM_PKGVAR}"
+
+SERVICE_COMMAND="$APP_DIR/bin/plex-server $APP_DATA_DIR"
+SVC_BACKGROUND=y
+SVC_WRITE_PID=y
+
+service_preuninst() {
+    # 兜底：确保 Plex 相关进程被完全终止
+    # Plex 会派生 Transcoder、Plug-in 等子进程，需一并清理
+    pkill -f "Plex Media Server" 2>/dev/null || true  # pkill-f-ok
+    sleep 1
+    pkill -9 -f "Plex Media Server" 2>/dev/null || true  # pkill-f-ok
+    pkill -9 -f "Plex Transcoder" 2>/dev/null || true  # pkill-f-ok
+    pkill -9 -f "Plex Plug-in" 2>/dev/null || true  # pkill-f-ok
+}
+
+service_poststop() {
+    service_preuninst
+}
+
+service_postupgrade() {
+    local old_data_dir="/var/apps/${APP_NAME}/var"
+
+    if [ "${TRIM_PKGVAR}" = "${old_data_dir}" ]; then
+        return 0
+    fi
+
+    if [ ! -d "${old_data_dir}" ] || [ -z "$(ls -A "${old_data_dir}" 2>/dev/null)" ]; then
+        return 0
+    fi
+
+    if [ -n "$(ls -A "${TRIM_PKGVAR}" 2>/dev/null)" ]; then
+        install_log "警告: 检测到旧版 Plex 数据目录 ${old_data_dir} 仍有内容，但 ${TRIM_PKGVAR} 已存在数据，跳过迁移以避免覆盖。"
+        return 0
+    fi
+
+    install_log "检测到旧版 Plex 数据目录 ${old_data_dir}，正在迁移数据到 ${TRIM_PKGVAR}"
+    rsync -a "${old_data_dir}/" "${TRIM_PKGVAR}/"
+}

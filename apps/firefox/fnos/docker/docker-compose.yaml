@@ -1,0 +1,25 @@
+services:
+  firefox:
+    image: ${DOCKER_MIRROR}docker.io/jlesage/firefox:v${VERSION}
+    container_name: firefox
+    ports:
+      - "${TRIM_SERVICE_PORT}:5800"
+    volumes:
+      - ${TRIM_PKGVAR:?}/config:/config
+      - ${TRIM_PKGVAR:?}/fonts:/usr/share/fonts
+    environment:
+      - USER_ID=${TRIM_UID}
+      - GROUP_ID=${TRIM_GID}
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+      - ENABLE_CJK_FONT=1
+      # PACKAGES_MIRROR points apk (used by jlesage's 15-cjk-font.sh during
+      # container init) at a fast Chinese Alpine mirror. Without this, container
+      # startup hangs for minutes-to-hours on "Installing font-wqy-zenhei"
+      # because Alpine's default mirror is slow/unreachable from China (#146 follow-up).
+      - PACKAGES_MIRROR=https://mirrors.aliyun.com/alpine
+      - DISPLAY_WIDTH=1280
+      - DISPLAY_HEIGHT=720
+      - KEEP_APP_RUNNING=1
+    shm_size: "2gb"
+    restart: unless-stopped
