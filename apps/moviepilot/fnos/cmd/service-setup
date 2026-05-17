@@ -1,71 +1,13 @@
 #!/bin/bash
-# MoviePilot Docker app — wizard integration
-# docker-compose.yaml declares \`env_file: [.env]\` so .env MUST exist when
-# compose starts the container. We always write the file, with the wizard
-# values or with empty values that let the compose-side defaults take over.
 
 service_postinst() {
-    # Apply wizard-specified directories (compose volumes section uses
-    # ${MEDIA_DIR:-...} / ${DOWNLOAD_DIR:-...} which are sed-patched here).
-    if [ -n "${wizard_media_dir}" ]; then
-        apply_media_dir "${wizard_media_dir}"
-        mkdir -p "${wizard_media_dir}" 2>/dev/null || true
-    fi
-    if [ -n "${wizard_download_dir}" ]; then
-        apply_download_dir "${wizard_download_dir}"
-        mkdir -p "${wizard_download_dir}" 2>/dev/null || true
-    fi
-
     # Create default directories and fix ownership for PUID/PGID
     mkdir -p "${TRIM_PKGVAR}/config" "${TRIM_PKGVAR}/core" "${TRIM_PKGVAR}/media" "${TRIM_PKGVAR}/downloads" 2>/dev/null || true
     chown -R "${TRIM_UID}:${TRIM_GID}" "${TRIM_PKGVAR}/config" "${TRIM_PKGVAR}/core" "${TRIM_PKGVAR}/media" "${TRIM_PKGVAR}/downloads" 2>/dev/null || true
 }
 
-service_preupgrade() {
-    # Backup persisted values for restore after upgrade
-    if [ -f "$MEDIA_DIR_SAVE" ]; then
-        cp "$MEDIA_DIR_SAVE" "${TRIM_PKGVAR}/.media_dir.bak"
-    fi
-    if [ -f "$DOWNLOAD_DIR_SAVE" ]; then
-        cp "$DOWNLOAD_DIR_SAVE" "${TRIM_PKGVAR}/.download_dir.bak"
-    fi
-}
-
-service_restore() {
-    if [ -f "${TRIM_PKGVAR}/.media_dir.bak" ]; then
-        apply_media_dir "$(cat "${TRIM_PKGVAR}/.media_dir.bak")"
-        rm -f "${TRIM_PKGVAR}/.media_dir.bak"
-    fi
-    if [ -f "${TRIM_PKGVAR}/.download_dir.bak" ]; then
-        apply_download_dir "$(cat "${TRIM_PKGVAR}/.download_dir.bak")"
-        rm -f "${TRIM_PKGVAR}/.download_dir.bak"
-    fi
-}
-
 COMPOSE_FILE="${TRIM_APPDEST}/docker/docker-compose.yaml"
 PORT_SAVE="${TRIM_PKGVAR}/.port"
-MEDIA_DIR_SAVE="${TRIM_PKGVAR}/.media_dir"
-DOWNLOAD_DIR_SAVE="${TRIM_PKGVAR}/.download_dir"
-
-# MEDIA_DIR / DOWNLOAD_DIR appear inside Compose's volumes: bindings, e.g.
-#   - ${MEDIA_DIR:-${TRIM_PKGVAR:?}/media}:/media
-# Volume substitutions are evaluated at compose parse time, so we sed-patch
-# directly to inject wizard-specified paths.
-apply_media_dir() {
-    local dir="$1"
-    [ -z "$dir" ] && return
-    sed -i 's|^      - .*:/media$|      - '"${dir}"':/media|' "$COMPOSE_FILE"
-    echo "${dir}" > "$MEDIA_DIR_SAVE"
-    install_log "Patched docker-compose.yaml: media_dir=${dir}"
-}
-
-apply_download_dir() {
-    local dir="$1"
-    [ -z "$dir" ] && return
-    sed -i 's|^      - .*:/downloads$|      - '"${dir}"':/downloads|' "$COMPOSE_FILE"
-    echo "${dir}" > "$DOWNLOAD_DIR_SAVE"
-    install_log "Patched docker-compose.yaml: download_dir=${dir}"
-}
 
 apply_port() {
     local port="$1"
@@ -78,12 +20,6 @@ apply_port() {
 service_postupgrade() {
     if [ -f "$PORT_SAVE" ]; then
         apply_port "$(cat "$PORT_SAVE")"
-    fi
-    if [ -f "$MEDIA_DIR_SAVE" ]; then
-        apply_media_dir "$(cat "$MEDIA_DIR_SAVE")"
-    fi
-    if [ -f "$DOWNLOAD_DIR_SAVE" ]; then
-        apply_download_dir "$(cat "$DOWNLOAD_DIR_SAVE")"
     fi
 }
 
