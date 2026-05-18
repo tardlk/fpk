@@ -2,7 +2,7 @@
 
 - 基于 [Jellyfin ${VERSION}](https://jellyfin.org/)
 - 平台: fnOS
-- 默认端口: 8097${REVISION_NOTE}
+- 默认端口: 18096${REVISION_NOTE}
 ${CHANGELOG}
 **国内镜像**:
 - [${FILE_PREFIX}_${FPK_VERSION}_x86.fpk](https://ghfast.top/https://github.com/tardlk/fpk/releases/download/${RELEASE_TAG}/${FILE_PREFIX}_${FPK_VERSION}_x86.fpk)
