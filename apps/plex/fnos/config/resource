@@ -1,7 +1,4 @@
 {
-    "port-config":{
-        "protocol-file":"PlexMediaServer.sc"
-    },
     "data-share": {
         "shares": [
             {
@@ -13,7 +10,5 @@
                 }
             }
         ]
-    },
-    "systemd-unit": {
     }
 }

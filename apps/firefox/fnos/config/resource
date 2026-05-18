@@ -1,7 +1,4 @@
 {
-    "port-config": {
-        "protocol-file": "Firefox.sc"
-    },
     "data-share": {
         "shares": [
             {

@@ -82,7 +82,6 @@ app_build_app_tgz() {
     cp -a "$src/bin" "$src/etc" "$src/extra" "$src/lib" "$src/licenses" "$src/share" "$src/system" "$dst/"
     mkdir -p "$dst/config" "$dst/ui/images"
 
-    cp "$PKG_DIR/EmbyServer.sc" "$dst/" 2>/dev/null || true
     cp -a "$PKG_DIR/config"/* "$dst/config/" 2>/dev/null || true
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
     cp "$PKG_DIR/bin/emby-server" "$dst/bin/emby-server" 2>/dev/null || true

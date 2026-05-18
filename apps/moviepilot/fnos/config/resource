@@ -1,7 +1,4 @@
 {
-    "port-config": {
-        "protocol-file": "moviepilot.sc"
-    },
     "data-share": {
         "shares": [
             {

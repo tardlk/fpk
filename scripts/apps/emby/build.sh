@@ -21,7 +21,6 @@ for dir in bin etc extra lib licenses share system; do
 done
 mkdir -p "$dst/config" "$dst/ui/images"
 
-cp apps/emby/fnos/EmbyServer.sc "$dst/"
 cp apps/emby/fnos/config/* "$dst/config/"
 cp -a apps/emby/fnos/ui/* "$dst/ui/"
 cp apps/emby/fnos/bin/emby-server "$dst/bin/emby-server"
