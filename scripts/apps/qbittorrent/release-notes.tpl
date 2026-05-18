@@ -2,6 +2,7 @@
 
 - 基于 [qbittorrent-nox-static ${UPSTREAM_TAG}](https://github.com/userdocs/qbittorrent-nox-static/releases/tag/${UPSTREAM_TAG})
 - 平台: fnOS
+- 默认端口: ${DEFAULT_PORT}
 - 默认用户: admin
 - 默认密码: adminadmin (请登录后修改)${REVISION_NOTE}
 ${CHANGELOG}
