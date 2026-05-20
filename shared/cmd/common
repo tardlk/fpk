@@ -112,7 +112,7 @@ echo "service_postconfig"
 
 check_docker()
 {
-	FILE_PATH="${TRIM_APPDEST}/app/docker-compose.yaml"
+	FILE_PATH="${TRIM_APPDEST}/docker/docker-compose.yaml"
 	if [ -f "$FILE_PATH" ]; then
 		DOCKER_NAME=$(cat $FILE_PATH | grep "container_name" | awk -F ':' '{print $2}' | xargs)
 		echo "DOCKER_NAME is set to: $DOCKER_NAME"
