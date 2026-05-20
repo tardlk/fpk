@@ -6,7 +6,8 @@ INPUT_VERSION="${1:-}"
 if [ -n "$INPUT_VERSION" ]; then
   VERSION="$INPUT_VERSION"
 else
-  VERSION=$(curl -sL "https://github.com/MediaBrowser/Emby.Releases/releases" | \
+  VERSION=$(curl -sL ${GH_TOKEN:+-H "Authorization: Bearer $GH_TOKEN"} \
+    "https://github.com/MediaBrowser/Emby.Releases/releases" | \
     grep -oE '(releases/tag/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[^"]*|Latest)' | \
     grep -B1 "^Latest$" | head -1 | sed 's|releases/tag/||')
 fi

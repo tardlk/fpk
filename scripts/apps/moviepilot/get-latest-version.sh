@@ -6,7 +6,8 @@ INPUT_VERSION="${1:-}"
 if [ -n "$INPUT_VERSION" ]; then
   VERSION="$INPUT_VERSION"
 else
-  VERSION=$(curl -sL "https://api.github.com/repos/jxxghp/MoviePilot/releases/latest" | \
+  VERSION=$(curl -sL ${GH_TOKEN:+-H "Authorization: Bearer $GH_TOKEN"} \
+    "https://api.github.com/repos/jxxghp/MoviePilot/releases/latest" | \
     jq -r '.tag_name' | sed 's/^v//')
 fi
 

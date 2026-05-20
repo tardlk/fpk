@@ -3,7 +3,8 @@ set -euo pipefail
 
 INPUT_VERSION="${1:-}"
 
-TAG=$(curl -sL "https://api.github.com/repos/OpenListTeam/OpenList/releases/latest" | \
+TAG=$(curl -sL ${GH_TOKEN:+-H "Authorization: Bearer $GH_TOKEN"} \
+  "https://api.github.com/repos/OpenListTeam/OpenList/releases/latest" | \
   jq -r '.tag_name')
 
 if [ -n "$INPUT_VERSION" ]; then
