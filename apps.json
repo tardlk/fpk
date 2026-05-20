@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-20T09:19:29Z",
+  "generated_at": "2026-05-20T09:28:08Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -34,8 +34,8 @@
       "display_name": "Firefox",
       "description": "Firefox 浏览器的 Docker 容器版本，通过网页即可远程访问，内置中文字体支持。",
       "version": "26.03.1",
-      "fpk_version": "26.03.1-r3",
-      "release_tag": "firefox/v26.03.1-r3",
+      "fpk_version": "26.03.1-r4",
+      "release_tag": "firefox/v26.03.1-r4",
       "service_port": 5801,
       "homepage_url": "https://github.com/jlesage/docker-firefox",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/firefox/fnos/ICON_256.PNG",
@@ -43,7 +43,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-20T09:19:13Z",
+      "updated_at": "2026-05-20T09:27:57Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "browser"
@@ -76,8 +76,8 @@
       "display_name": "MoviePilot",
       "description": "影视自动化管理工具,支持自动订阅、下载、整理和通知。首次启动通过 Web UI 配置。",
       "version": "2.12.2",
-      "fpk_version": "2.12.2-r2",
-      "release_tag": "moviepilot/v2.12.2-r2",
+      "fpk_version": "2.12.2-r3",
+      "release_tag": "moviepilot/v2.12.2-r3",
       "service_port": 3000,
       "homepage_url": "https://github.com/jxxghp/MoviePilot",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/moviepilot/fnos/ICON_256.PNG",
@@ -85,7 +85,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-20T09:19:16Z",
+      "updated_at": "2026-05-20T09:27:57Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content",
