@@ -10,7 +10,7 @@
 fpk/
 ├── shared/              # 生命周期框架（所有应用共用）
 │   ├── cmd/             # 守护进程管理、安装/升级/卸载钩子
-│   └── wizard/          # 默认卸载向导
+│   └── wizard/          # 默认卸载向导（各应用有独立 wizard 时优先使用）
 ├── apps/
 │   ├── plex/            # Plex 媒体服务器 (32400, .deb 提取)
 │   ├── emby/            # Emby 媒体服务器 (8096, .deb 提取)
@@ -44,8 +44,8 @@ fpk/
 - **Plex / Emby / Jellyfin**: .deb 提取，需要 `video` + `render` 组硬件转码
 - **qBittorrent**: 预配置 admin/adminadmin，中文 locale，关闭 CSRF 适配 fnOS 反向代理
 - **OpenList**: Go 单二进制，最简应用
-- **Firefox**: Docker，VNC 密码通过 `.vncpass_clear` 文件注入
-- **MoviePilot**: Docker v2，${wizard_password} compose 变量替换
+- **Firefox**: Docker，VNC 密码通过 wizard 设置，支持 Docker 镜像加速
+- **MoviePilot**: Docker v2，${wizard_password} compose 变量替换，支持 Docker 镜像加速
 
 ## CONVENTIONS
 
