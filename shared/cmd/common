@@ -378,7 +378,7 @@ stop_daemon ()
 daemon_status ()
 {
 	if [ -n "$DOCKER_NAME" ]; then
-        docker inspect $DOCKER_NAME | grep -q "\"Status\": \"running\"," || exit 1
+        docker inspect $DOCKER_NAME | grep -q "\"Status\": \"running\"," || return 1
         return
     fi	
     status=0

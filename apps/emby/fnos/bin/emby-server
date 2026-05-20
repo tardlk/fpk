@@ -18,13 +18,20 @@ export NEOReadDebugKeys=1
 export OverrideGpuAddressSpace=48
 
 cd $APP_DIR || exit 1
-exec $APP_DIR/system/EmbyServer \
-  -programdata $APP_DATA_DIR \
-  -ffdetect $APP_DIR/bin/ffdetect \
-  -ffmpeg $APP_DIR/bin/ffmpeg \
-  -ffprobe $APP_DIR/bin/ffprobe \
-  -restartexitcode 3 \
-  -nolocalportconfig \
-  -ignore_vaapi_enabled_flag \
-  -pidfile "$PID_FILE" \
-  -defaultdirectory "/var/apps/${APP_NAME}/shares/${APP_NAME}"
+while true; do
+    $APP_DIR/system/EmbyServer \
+      -programdata $APP_DATA_DIR \
+      -ffdetect $APP_DIR/bin/ffdetect \
+      -ffmpeg $APP_DIR/bin/ffmpeg \
+      -ffprobe $APP_DIR/bin/ffprobe \
+      -restartexitcode 3 \
+      -nolocalportconfig \
+      -ignore_vaapi_enabled_flag \
+      -pidfile "$PID_FILE" \
+      -defaultdirectory "/var/apps/${APP_NAME}/shares/${APP_NAME}"
+    EXIT_CODE=$?
+    if [ "$EXIT_CODE" -ne 3 ]; then
+        exit "$EXIT_CODE"
+    fi
+    echo "$(date): EmbyServer exited with code 3, restarting..." >> "$APP_DATA_DIR"/embyserver.log
+done
