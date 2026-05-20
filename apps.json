@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-20T08:42:09Z",
+  "generated_at": "2026-05-20T09:03:08Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -34,8 +34,8 @@
       "display_name": "Firefox",
       "description": "Firefox 浏览器的 Docker 容器版本，通过网页即可远程访问，内置中文字体支持。",
       "version": "26.03.1",
-      "fpk_version": "26.03.1-r1",
-      "release_tag": "firefox/v26.03.1-r1",
+      "fpk_version": "26.03.1-r2",
+      "release_tag": "firefox/v26.03.1-r2",
       "service_port": 5801,
       "homepage_url": "https://github.com/jlesage/docker-firefox",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/firefox/fnos/ICON_256.PNG",
@@ -43,7 +43,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-20T08:40:35Z",
+      "updated_at": "2026-05-20T09:02:53Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "browser"
@@ -140,8 +140,8 @@
       "display_name": "qBittorrent",
       "description": "qBittorrent是一个轻量级BitTorrent客户端，简单易用，功能强大。默认用户名admin，密码adminadmin。",
       "version": "5.2.0",
-      "fpk_version": "5.2.0",
-      "release_tag": "qbittorrent/v5.2.0",
+      "fpk_version": "5.2.0-r1",
+      "release_tag": "qbittorrent/v5.2.0-r1",
       "service_port": 8085,
       "homepage_url": "https://github.com/userdocs/qbittorrent-nox-static",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/qbittorrent/fnos/ICON_256.PNG",
@@ -149,7 +149,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-20T08:40:41Z",
+      "updated_at": "2026-05-20T09:03:04Z",
       "download_count": 0,
       "app_type": "native",
       "category": "download"
