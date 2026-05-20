@@ -1,0 +1,15 @@
+[
+    {
+        "stepTitle": "Jellyfin 安装",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "Jellyfin 是一款免费开源的媒体服务器，可管理和流式传输您的电影、电视剧、音乐等媒体内容。内置 FFmpeg 转码支持。"
+            },
+            {
+                "type": "tips",
+                "helpText": "<b>首次访问：</b><br>安装完成后，浏览器访问 <code>http://NAS_IP:8097</code> 完成初始化设置向导。<br>在 Web UI 中创建管理员账号、添加媒体库即可开始使用。"
+            }
+        ]
+    }
+]

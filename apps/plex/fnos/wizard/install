@@ -1,0 +1,15 @@
+[
+    {
+        "stepTitle": "Plex 安装",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "Plex Media Server 是一款功能强大的媒体服务器，可管理和串流您的电影、电视剧、音乐和照片。支持硬件转码、离线同步等高级功能。"
+            },
+            {
+                "type": "tips",
+                "helpText": "<b>首次访问：</b><br>安装完成后，浏览器访问 <code>http://NAS_IP:32400</code>。<br>需要使用 Plex 账号登录（免费注册即可），然后添加媒体库开始使用。"
+            }
+        ]
+    }
+]

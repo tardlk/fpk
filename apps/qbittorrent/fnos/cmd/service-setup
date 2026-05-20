@@ -32,7 +32,7 @@ ulimit -m `expr $MEM / 3 \* 1024`
 SERVICE_COMMAND[0]="bin/${QBIT_BIN} --profile=${TRIM_PKGVAR} --webui-port=${PORT}"
 
 # Rename framework log to avoid confusion with qbittorrent.log
-LOG_FILE="${TRIM_PKGVAR}/service.log"
+LOG_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}-service.log"
 
 SVC_BACKGROUND=y
 SVC_WRITE_PID=y
