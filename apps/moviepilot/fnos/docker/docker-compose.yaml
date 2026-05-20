@@ -1,6 +1,6 @@
 services:
   moviepilot:
-    image: ${wizard_docker_mirror:-docker.io/}jxxghp/moviepilot-v2:${VERSION}
+    image: __DOCKER_MIRROR__jxxghp/moviepilot-v2:${VERSION}
     container_name: moviepilot
     ports:
       - "${TRIM_SERVICE_PORT}:3000"
