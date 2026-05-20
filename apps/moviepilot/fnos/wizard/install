@@ -17,6 +17,16 @@
             },
             {
                 "type": "tips",
+                "helpText": "<b>Docker 镜像加速：</b>国内网络直接拉取 Docker Hub 镜像可能很慢甚至失败。可在下方填入 Docker 镜像加速地址（留空则直连 Docker Hub）。<br><br>常用加速地址：<code>docker.1ms.run/</code>、<code>docker.xuanyuan.me/</code>"
+            },
+            {
+                "type": "text",
+                "field": "wizard_docker_mirror",
+                "label": "Docker 镜像加速地址（留空直连）",
+                "placeholder": "docker.1ms.run/"
+            },
+            {
+                "type": "tips",
                 "helpText": "MoviePilot 需要访问下载工具（如 qBittorrent）的下载目录和媒体库目录，才能完成自动整理和刮削。<br><br><b>请确保填写的路径与下载工具实际使用的目录一致</b>，否则 MoviePilot 将无法找到已下载的文件。<br><br>路径填写 NAS 上的绝对路径，例如 <code>/vol1/downloads</code>、<code>/vol1/media</code>。<br>留空将使用应用私有数据目录（其他应用无法访问，不推荐）。"
             },
             {

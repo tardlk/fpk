@@ -1,6 +1,6 @@
 services:
   firefox:
-    image: ${DOCKER_MIRROR}docker.io/jlesage/firefox:v${VERSION}
+    image: ${wizard_docker_mirror:-docker.io/}jlesage/firefox:v${VERSION}
     container_name: firefox
     ports:
       - "${TRIM_SERVICE_PORT}:5800"
