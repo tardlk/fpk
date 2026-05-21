@@ -40,8 +40,10 @@ func main() {
 	// API — register at both /api and /app/fnet/api for gateway compatibility
 	mux.HandleFunc("/api/bbr", handleBBR)
 	mux.HandleFunc("/api/hosts", handleHosts)
+	mux.HandleFunc("/api/qdisc/apply", handleQdiscApply)
 	mux.HandleFunc("/app/fnet/api/bbr", handleBBR)
 	mux.HandleFunc("/app/fnet/api/hosts", handleHosts)
+	mux.HandleFunc("/app/fnet/api/qdisc/apply", handleQdiscApply)
 
 	// Static files — gateway forwards /app/fnet to the socket
 	staticFS, _ := fs.Sub(staticFiles, "static")
@@ -196,6 +198,58 @@ func handleHosts(w http.ResponseWriter, r *http.Request) {
 		logf("HOSTS -> method not allowed: %s", r.Method)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
+}
+
+func handleQdiscApply(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	ifaces := getPhysicalIfaces()
+	logf("QDISC APPLY -> applying fq to %d interfaces: %v", len(ifaces), ifaces)
+
+	var results []string
+	for _, iface := range ifaces {
+		out, err := exec.Command("tc", "qdisc", "replace", "dev", iface, "root", "fq").CombinedOutput()
+		if err != nil {
+			msg := fmt.Sprintf("%s: 失败 - %s", iface, strings.TrimSpace(string(out)))
+			logf("QDISC APPLY -> %s", msg)
+			results = append(results, msg)
+		} else {
+			msg := fmt.Sprintf("%s: 已切换为 fq", iface)
+			logf("QDISC APPLY -> %s", msg)
+			results = append(results, msg)
+		}
+	}
+
+	writeJSON(w, APIResponse{
+		Success: true,
+		Message: strings.Join(results, "\n"),
+	})
+}
+
+func getPhysicalIfaces() []string {
+	data, err := os.ReadFile("/proc/net/dev")
+	if err != nil {
+		return nil
+	}
+	var ifaces []string
+	for _, line := range strings.Split(string(data), "\n") {
+		parts := strings.SplitN(line, ":", 2)
+		if len(parts) != 2 {
+			continue
+		}
+		name := strings.TrimSpace(parts[0])
+		// Skip virtual interfaces
+		if name == "lo" || strings.HasPrefix(name, "docker") ||
+			strings.HasPrefix(name, "br-") || strings.HasPrefix(name, "veth") ||
+			strings.HasPrefix(name, "tun") || strings.HasPrefix(name, "tap") {
+			continue
+		}
+		ifaces = append(ifaces, name)
+	}
+	return ifaces
 }
 
 // ------- sysctl helpers -------

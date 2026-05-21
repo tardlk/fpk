@@ -36,6 +36,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
     <button class="btn btn-on" id="btnEnable" onclick="toggleBBR(true)">开启 BBR</button>
     <button class="btn btn-off" id="btnDisable" onclick="toggleBBR(false)" style="margin-left:8px">关闭 BBR</button>
   </div>
+  <p class="info" style="margin-top:8px">fq 队列规则对<b>新接口</b>默认生效，已启用接口需手动应用：</p>
+  <button class="btn btn-save" onclick="applyQdisc()" style="margin-top:4px">应用 fq 到当前接口</button>
+  <div id="qdiscMsg" class="msg"></div>
   <div class="info" style="margin-top:12px">
     当前算法: <b id="congAlg">-</b> &nbsp;|&nbsp; 队列规则: <b id="qdisc">-</b>
   </div>
@@ -122,6 +125,17 @@ function showMsg(id, cls, text) {
   el.className = 'msg ' + cls;
   el.textContent = text;
   setTimeout(() => el.className = 'msg', 4000);
+}
+
+async function applyQdisc() {
+  try {
+    const res = await fetch('/app/fnet/api/qdisc/apply', { method: 'POST' });
+    const json = await res.json();
+    showMsg('qdiscMsg', json.success ? 'msg-success' : 'msg-error', json.message);
+    if (json.success) loadBBR();
+  } catch(e) {
+    showMsg('qdiscMsg', 'msg-error', '请求失败: ' + e.message);
+  }
 }
 
 loadBBR();
