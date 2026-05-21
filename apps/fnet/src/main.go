@@ -37,9 +37,11 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	// API
+	// API — register at both /api and /app/fnet/api for gateway compatibility
 	mux.HandleFunc("/api/bbr", handleBBR)
 	mux.HandleFunc("/api/hosts", handleHosts)
+	mux.HandleFunc("/app/fnet/api/bbr", handleBBR)
+	mux.HandleFunc("/app/fnet/api/hosts", handleHosts)
 
 	// Static files — gateway forwards /app/fnet to the socket
 	staticFS, _ := fs.Sub(staticFiles, "static")
