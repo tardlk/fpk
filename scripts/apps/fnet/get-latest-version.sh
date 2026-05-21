@@ -3,11 +3,12 @@ set -euo pipefail
 
 VERSION="${1:-${VERSION:-}}"
 
-# FNet is a Go app, version is just a timestamp-based tag
-# For CI builds, we use the commit short hash
+# FNet version is maintained in the manifest
 if [ -z "${VERSION}" ]; then
-  VERSION=$(git rev-parse --short HEAD 2>/dev/null || echo "dev")
+  VERSION=$(grep "^version" apps/fnet/fnos/manifest | awk -F'=' '{print $2}' | tr -d ' ')
 fi
+
+[ -z "${VERSION}" ] && { echo "Failed to resolve version from manifest" >&2; exit 1; }
 
 echo "VERSION=$VERSION"
 if [ -n "${GITHUB_OUTPUT:-}" ]; then
