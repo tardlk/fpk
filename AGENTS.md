@@ -44,8 +44,8 @@ fpk/
 - **Plex / Emby / Jellyfin**: .deb 提取，需要 `video` + `render` 组硬件转码
 - **qBittorrent**: 预配置 admin/adminadmin，中文 locale，关闭 CSRF 适配 fnOS 反向代理
 - **OpenList**: Go 单二进制，最简应用
-- **Firefox**: Docker，VNC 密码通过 wizard 设置，支持 Docker 镜像加速
-- **MoviePilot**: Docker v2，${wizard_password} compose 变量替换，支持 Docker 镜像加速
+- **Firefox**: Docker，VNC 密码通过 wizard 设置
+- **MoviePilot**: Docker v2，${wizard_password} compose 变量替换
 
 ## CONVENTIONS
 

@@ -14,16 +14,6 @@
                 "type": "password",
                 "field": "wizard_password",
                 "label": "访问密码（留空则不启用）"
-            },
-            {
-                "type": "tips",
-                "helpText": "<b>Docker 镜像加速：</b>国内网络直接拉取 Docker Hub 镜像可能很慢甚至失败。可在下方填入 Docker 镜像加速地址（留空则直连 Docker Hub）。<br><br>常用加速地址：<code>https://docker.1ms.run</code>、<code>https://docker.xuanyuan.me</code>"
-            },
-            {
-                "type": "text",
-                "field": "wizard_docker_mirror",
-                "label": "Docker 镜像加速地址（留空直连）",
-                "placeholder": "https://docker.1ms.run"
             }
         ]
     }
