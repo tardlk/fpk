@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-21T09:07:52Z",
+  "generated_at": "2026-05-21T09:12:54Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -55,8 +55,8 @@
       "display_name": "FNet",
       "description": "飞牛 NAS 网络优化工具。支持 TCP BBR 拥塞控制开关（持久化）、hosts 文件编辑。通过统一网关访问，无需额外端口。",
       "version": "1.0.0",
-      "fpk_version": "1.0.0-r2",
-      "release_tag": "fnet/v1.0.0-r2",
+      "fpk_version": "1.0.0-r3",
+      "release_tag": "fnet/v1.0.0-r3",
       "service_port": 0,
       "homepage_url": "https://github.com/tardlk/fpk",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/fnet/fnos/ICON_256.PNG",
@@ -64,7 +64,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-21T09:07:38Z",
+      "updated_at": "2026-05-21T09:12:42Z",
       "download_count": 0,
       "app_type": "native",
       "category": "tools"
