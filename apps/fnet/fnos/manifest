@@ -1,0 +1,15 @@
+appname         = fnet
+version         = 1.0.0
+display_name    = FNet
+platform        = all
+maintainer      = tardlk
+maintainer_url  = https://github.com/tardlk/fpk
+distributor     = tardlk
+distributor_url = https://github.com/tardlk/fpk
+desktop_uidir   = ui
+desktop_applaunchname = fnet.Application
+service_port    = 0
+checkport       = false
+desc            = 飞牛 NAS 网络优化工具。支持 TCP BBR 拥塞控制开关（持久化）、hosts 文件编辑。通过统一网关访问，无需额外端口。
+source          = thirdparty
+checksum        = 

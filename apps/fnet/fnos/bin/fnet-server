@@ -1,0 +1,8 @@
+#!/bin/sh
+APP_DIR="${TRIM_APPDEST}"
+SOCKET="${APP_DIR}/fnet.sock"
+
+export FNET_SOCKET="${SOCKET}"
+
+cd "$APP_DIR" || exit 1
+exec ./fnet

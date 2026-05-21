@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "fnet.Application": {
+            "title": "FNet",
+            "desc": "BBR & Hosts",
+            "icon": "images/{0}.png",
+            "type": "iframe",
+            "protocol": "",
+            "gatewaySocket": "fnet.sock",
+            "gatewayPrefix": "/app/fnet",
+            "url": "/app/fnet",
+            "allUsers": false
+        }
+    }
+}

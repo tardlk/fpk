@@ -1,0 +1,20 @@
+#!/bin/bash
+
+LOG_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.log"
+PID_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.pid"
+
+APP_DIR="${TRIM_APPDEST}"
+
+SERVICE_COMMAND="$APP_DIR/bin/fnet-server"
+SVC_BACKGROUND=y
+SVC_WRITE_PID=y
+
+service_preuninst() {
+    pkill -x "fnet" 2>/dev/null || true
+    sleep 1
+    pkill -9 -x "fnet" 2>/dev/null || true
+}
+
+service_poststop() {
+    service_preuninst
+}
