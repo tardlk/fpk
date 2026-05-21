@@ -76,9 +76,10 @@ func withLogging(next http.Handler) http.Handler {
 // ------- types -------
 
 type BBRStatus struct {
-	Enabled bool   `json:"enabled"`
-	CongAlg string `json:"congAlg"`
-	Qdisc   string `json:"qdisc"`
+	Enabled  bool   `json:"enabled"`
+	CongAlg  string `json:"congAlg"`
+	Qdisc    string `json:"qdisc"`
+	IfacesFq bool   `json:"ifacesFq"`
 }
 
 type HostsData struct {
@@ -105,8 +106,9 @@ func handleBBR(w http.ResponseWriter, r *http.Request) {
 			Enabled: congAlg == "bbr" && bbrPersist,
 			CongAlg: congAlg,
 			Qdisc:   qdisc,
+				IfacesFq: allIfacesFq(),
 		}
-		logf("BBR GET -> enabled=%v cong=%s qdisc=%s", status.Enabled, status.CongAlg, status.Qdisc)
+		logf("BBR GET -> enabled=%v cong=%s qdisc=%s", status.Enabled, status.CongAlg, status.Qdisc, status.IfacesFq)
 		writeJSON(w, APIResponse{Success: true, Data: status})
 
 	case "POST":
@@ -250,6 +252,20 @@ func getPhysicalIfaces() []string {
 		ifaces = append(ifaces, name)
 	}
 	return ifaces
+}
+
+nfunc allIfacesFq() bool {
+	for _, iface := range getPhysicalIfaces() {
+		out, err := exec.Command("tc", "-j", "qdisc", "show", "dev", iface).Output()
+		if err != nil {
+			logf("QDISC CHECK -> failed to read %s: %v", iface, err)
+			return false
+		}
+		if !strings.Contains(string(out), `"kind":"fq"`) {
+			return false
+		}
+	}
+	return true
 }
 
 // ------- sysctl helpers -------

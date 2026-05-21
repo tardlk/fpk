@@ -37,7 +37,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
     <button class="btn btn-off" id="btnDisable" onclick="toggleBBR(false)" style="margin-left:8px">关闭 BBR</button>
   </div>
   <p class="info" style="margin-top:8px">fq 队列规则对<b>新接口</b>默认生效，已启用接口需手动应用：</p>
-  <button class="btn btn-save" onclick="applyQdisc()" style="margin-top:4px">应用 fq 到当前接口</button>
+  <button class="btn btn-save" id="qdiscBtn" onclick="applyQdisc()" style="margin-top:4px">应用 fq 到当前接口</button>
   <div id="qdiscMsg" class="msg"></div>
   <div class="info" style="margin-top:12px">
     当前算法: <b id="congAlg">-</b> &nbsp;|&nbsp; 队列规则: <b id="qdisc">-</b>
@@ -69,6 +69,9 @@ async function loadBBR() {
       document.getElementById('qdisc').textContent = d.qdisc;
       document.getElementById('btnEnable').style.display = d.enabled ? 'none' : 'inline-block';
       document.getElementById('btnDisable').style.display = d.enabled ? 'inline-block' : 'none';
+      const qb = document.getElementById('qdiscBtn');
+      if (d.ifacesFq) { qb.disabled = true; qb.textContent = '接口已是 fq'; qb.style.opacity = '0.5'; }
+      else { qb.disabled = false; qb.textContent = '应用 fq 到当前接口'; qb.style.opacity = '1'; }
     }
   } catch(e) {
     document.getElementById('bbrBadge').textContent = '加载失败';
