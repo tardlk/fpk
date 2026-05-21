@@ -2,8 +2,7 @@ services:
   moviepilot:
     image: docker.io/jxxghp/moviepilot-v2:${VERSION}
     container_name: moviepilot
-    ports:
-      - "${TRIM_SERVICE_PORT}:3000"
+    network_mode: host
     volumes:
       - ${TRIM_PKGVAR:?}/config:/config
       - ${TRIM_PKGVAR:?}/core:/moviepilot
@@ -13,10 +12,9 @@ services:
       - TZ=Asia/Shanghai
       - PUID=${TRIM_UID}
       - PGID=${TRIM_GID}
-      - UMASK=022
-      - NGINX_PORT=3000
-      - PORT=3001
-      - GITHUB_PROXY=https://gh-proxy.com/
-      - SUPERUSER=admin
+      - UMASK=000
+      - NGINX_PORT=4000
+      - PORT=4001
+      - SUPERUSER=${wizard_superuser:-admin}
       - SUPERUSER_PASSWORD=${wizard_password:-password}
     restart: unless-stopped

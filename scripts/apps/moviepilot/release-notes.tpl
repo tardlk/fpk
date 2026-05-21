@@ -3,7 +3,7 @@
 - 基于 [MoviePilot ${VERSION}](https://github.com/jxxghp/MoviePilot)
 - 基于 Docker 容器运行，需要 fnOS Docker 环境
 - 平台: fnOS
-- 默认端口: 3000
+- 默认端口: 4000
 - 首次启动通过 Web UI 配置${REVISION_NOTE}
 ${CHANGELOG}
 **国内镜像**:
