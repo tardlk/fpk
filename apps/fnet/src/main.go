@@ -41,9 +41,15 @@ func main() {
 	mux.HandleFunc("/api/bbr", handleBBR)
 	mux.HandleFunc("/api/hosts", handleHosts)
 
-	// Static files
+	// Static files — gateway forwards /app/fnet to the socket
 	staticFS, _ := fs.Sub(staticFiles, "static")
-	mux.Handle("/", withLogging(http.FileServer(http.FS(staticFS))))
+	fileServer := http.FileServer(http.FS(staticFS))
+	mux.Handle("/app/fnet/", withLogging(http.StripPrefix("/app/fnet/", fileServer)))
+	mux.HandleFunc("/app/fnet", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/app/fnet/", http.StatusFound)
+	})
+	// Also serve at root for direct socket access
+	mux.Handle("/", withLogging(fileServer))
 
 	server := &http.Server{Handler: withLogging(mux)}
 	logf("FNet listening on %s (ready)", socketPath)
