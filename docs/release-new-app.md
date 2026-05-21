@@ -23,7 +23,7 @@
 | `docker/docker-compose.yaml` | Docker 应用 | Docker Compose 定义 |
 | `ui/config` | ✅ | 应用中心 UI 入口配置 |
 | `ui/images/64.png` | ✅ | 64×64 应用图标 |
-| `ICON.PNG` | ✅ | 90×90 应用图标 |
+| `ICON.PNG` | ✅ | 64×64 应用图标 |
 | `ICON_256.PNG` | ✅ | 256×256 应用图标 |
 
 ### 构建脚本 (`scripts/apps/<slug>/`)

@@ -2,7 +2,7 @@
 
 本文档旨在指导开发者如何在 `fpk` 项目中新增并维护第三方应用。本项目采用 monorepo 结构，通过 Bash 脚本将第三方应用重新打包为 fnOS 专用的 `.fpk` 安装包。
 
-在开始之前，请务必阅读 [fnOS 官方开发指南](fnos-developer-guide.md) 以了解 fnOS 应用的基本架构和规范。
+在开始之前，请务必阅读 [fnOS 官方开发文档](https://developer.fnnas.com/docs/) 以了解 fnOS 应用的基本架构和规范。
 
 ---
 
@@ -193,7 +193,7 @@ HOMEPAGE_URL="https://plex.tv" # 官方网站 (可选)
 
 直接下载对应架构的静态编译二进制文件。
 
-- **参考**: `apps/openlist/`、`apps/plex/`、`apps/emby/`、`apps/jellyfin/`
+- **参考**: `apps/openlist/`
 - **特点**: 无需额外依赖。在 `bin/` 中编写启动包装脚本，设置环境变量后 `exec` 实际二进制。
 - **build.sh 模式**:
   ```bash
@@ -224,7 +224,6 @@ HOMEPAGE_URL="https://plex.tv" # 官方网站 (可选)
 
 对于需要特定 Node.js 版本或复杂依赖的应用。
 
-- **参考**: `apps/audiobookshelf/`
 - **策略**: 在 `build.sh` 中下载对应架构的 Node.js 二进制，并编写包装脚本启动应用。
 
 ### Docker 容器 (复杂运行时依赖)
