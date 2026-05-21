@@ -10,6 +10,6 @@ desktop_uidir   = ui
 desktop_applaunchname = moviepilot.Application
 service_port    = 4000
 checkport       = false
-desc            = 影视自动化管理工具,支持自动订阅、下载、整理和通知。首次启动通过 Web UI 配置。
+desc            = 影视自动化管理工具，支持自动订阅、下载、整理和通知。Web UI 端口 4000，API 端口 4001。默认管理员 admin/password（可自定义）。配置时下载目录填 /downloads，媒体库目录填 /media。使用自定义目录需在应用设置中授权。
 source          = thirdparty
 checksum        = 

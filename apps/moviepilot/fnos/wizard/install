@@ -23,7 +23,7 @@
             },
             {
                 "type": "tips",
-                "helpText": "MoviePilot 需要访问下载工具（如 qBittorrent）的下载目录和媒体库目录，才能完成自动整理和刮削。<br><br><b>请确保填写的路径与下载工具实际使用的目录一致</b>，否则 MoviePilot 将无法找到已下载的文件。<br><br>路径填写 NAS 上的绝对路径，例如 <code>/vol1/downloads</code>、<code>/vol1/media</code>。<br>留空将使用应用私有数据目录（其他应用无法访问，不推荐）。"
+                "helpText": "MoviePilot 需要访问下载工具（如 qBittorrent）的下载目录和媒体库目录，才能完成自动整理和刮削。<br><br><b>路径说明：</b><br>下方填写 NAS 上的<b>宿主机绝对路径</b>，例如 <code>/vol1/downloads</code>、<code>/vol1/media</code>。<br>容器内对应路径为 <code>/downloads</code> 和 <code>/media</code>（在 MoviePilot Web UI 中配置时使用容器内路径）。<br><br><b>请注意：</b>如果填写了自定义路径，安装后需要在<b>应用设置 → 授权目录</b>中，为 MoviePilot 授予对应目录的<b>读写权限</b>，否则无法访问。<br>留空将使用应用私有数据目录（权限已预配置，但其他应用无法访问，不推荐）。"
             },
             {
                 "type": "text",
