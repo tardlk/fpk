@@ -254,7 +254,7 @@ func getPhysicalIfaces() []string {
 	return ifaces
 }
 
-nfunc allIfacesFq() bool {
+func allIfacesFq() bool {
 	for _, iface := range getPhysicalIfaces() {
 		out, err := exec.Command("tc", "-j", "qdisc", "show", "dev", iface).Output()
 		if err != nil {
