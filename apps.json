@@ -1,11 +1,32 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-22T09:11:22Z",
+  "generated_at": "2026-05-22T10:55:47Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
   },
   "apps": [
+    {
+      "slug": "firefox",
+      "appname": "firefox",
+      "file_prefix": "firefox",
+      "display_name": "Firefox",
+      "description": "Firefox 浏览器的 Docker 容器版本，通过网页即可远程访问，内置中文字体支持。",
+      "version": "26.03.1",
+      "fpk_version": "26.03.1",
+      "release_tag": "firefox/v26.03.1",
+      "service_port": 5801,
+      "homepage_url": "https://github.com/jlesage/docker-firefox",
+      "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/firefox/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-05-22T10:55:30Z",
+      "download_count": 0,
+      "app_type": "docker",
+      "category": "browser"
+    },
     {
       "slug": "fnet",
       "appname": "fnet",
@@ -26,6 +47,70 @@
       "download_count": 1,
       "app_type": "native",
       "category": "tools"
+    },
+    {
+      "slug": "moviepilot",
+      "appname": "moviepilot",
+      "file_prefix": "moviepilot",
+      "display_name": "MoviePilot",
+      "description": "影视自动化管理工具，支持自动订阅、下载、整理和通知。Web UI 端口 4000，API 端口 4001。默认管理员 admin/password（可自定义）。配置时下载目录填 /downloads，媒体库目录填 /media。使用自定义目录需在应用设置中授权。",
+      "version": "2.12.4",
+      "fpk_version": "2.12.4",
+      "release_tag": "moviepilot/v2.12.4",
+      "service_port": 4000,
+      "homepage_url": "https://github.com/jxxghp/MoviePilot",
+      "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/moviepilot/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-05-22T10:55:35Z",
+      "download_count": 0,
+      "app_type": "docker",
+      "category": "content",
+      "post_install_note": "请在 Web UI 中设置媒体库和下载目录，确保与下载工具（如 qBittorrent）使用的路径一致。"
+    },
+    {
+      "slug": "openlist",
+      "appname": "openlist",
+      "file_prefix": "openlist",
+      "display_name": "OpenList",
+      "description": "支持多种存储后端的文件列表/WebDAV 程序（AList 社区分支）",
+      "version": "4.2.1",
+      "fpk_version": "4.2.1",
+      "release_tag": "openlist/v4.2.1",
+      "service_port": 5244,
+      "homepage_url": "https://github.com/OpenListTeam/OpenList",
+      "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/openlist/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "0001-01-01T00:00:00Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "content"
+    },
+    {
+      "slug": "qbittorrent",
+      "appname": "qBittorrent",
+      "file_prefix": "qBittorrent",
+      "display_name": "qBittorrent",
+      "description": "qBittorrent是一个轻量级BitTorrent客户端，简单易用，功能强大。默认用户名admin，密码adminadmin。",
+      "version": "5.2.0",
+      "fpk_version": "5.2.0",
+      "release_tag": "qbittorrent/v5.2.0",
+      "service_port": 8085,
+      "homepage_url": "https://github.com/userdocs/qbittorrent-nox-static",
+      "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/qbittorrent/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-05-22T10:55:38Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "download"
     }
   ]
 }
