@@ -36,7 +36,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
     <button class="btn btn-on" id="btnEnable" onclick="toggleBBR(true)">开启 BBR</button>
     <button class="btn btn-off" id="btnDisable" onclick="toggleBBR(false)" style="margin-left:8px">关闭 BBR</button>
   </div>
-  <p class="info" style="margin-top:8px">fq 队列规则对<b>新接口</b>默认生效，已启用接口需手动应用：</p>
+  <p class="info" style="margin-top:8px"><b>建议开启以发挥 BBR 最佳性能</b>。fq 队列规则对<b>新接口</b>默认生效，已启用接口需手动应用：</p>
   <button class="btn btn-save" id="qdiscBtn" onclick="applyQdisc()" style="margin-top:4px">应用 fq 到当前接口</button>
   <div id="qdiscMsg" class="msg"></div>
   <div class="info" style="margin-top:12px">

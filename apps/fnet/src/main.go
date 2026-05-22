@@ -105,10 +105,10 @@ func handleBBR(w http.ResponseWriter, r *http.Request) {
 		status := BBRStatus{
 			Enabled: congAlg == "bbr" && bbrPersist,
 			CongAlg: congAlg,
-			Qdisc:   qdisc,
-				IfacesFq: allIfacesFq(),
+			Qdisc:    qdisc,
+			IfacesFq: allIfacesFq(),
 		}
-		logf("BBR GET -> enabled=%v cong=%s qdisc=%s", status.Enabled, status.CongAlg, status.Qdisc, status.IfacesFq)
+		logf("BBR GET -> enabled=%v cong=%s qdisc=%s ifacesFq=%v", status.Enabled, status.CongAlg, status.Qdisc, status.IfacesFq)
 		writeJSON(w, APIResponse{Success: true, Data: status})
 
 	case "POST":
@@ -143,8 +143,6 @@ func handleBBR(w http.ResponseWriter, r *http.Request) {
 			}
 			logf("BBR POST -> modprobe tcp_bbr OK")
 			exec.Command("sysctl", "-p").Run()
-			exec.Command("sysctl", "-w", "net.core.default_qdisc=fq").Run()
-			exec.Command("sysctl", "-w", "net.ipv4.tcp_congestion_control=bbr").Run()
 
 			afterCong, _ := sysctlGet("net.ipv4.tcp_congestion_control")
 			afterQdisc, _ := sysctlGet("net.core.default_qdisc")
@@ -156,9 +154,11 @@ func handleBBR(w http.ResponseWriter, r *http.Request) {
 			logf("BBR POST -> removed from sysctl.conf")
 			exec.Command("sysctl", "-p").Run()
 			exec.Command("sysctl", "-w", "net.ipv4.tcp_congestion_control=cubic").Run()
+			exec.Command("sysctl", "-w", "net.core.default_qdisc=pfifo_fast").Run()
 
 			afterCong, _ := sysctlGet("net.ipv4.tcp_congestion_control")
-			logf("BBR POST -> DONE after: cong=%s", afterCong)
+			afterQdisc, _ := sysctlGet("net.core.default_qdisc")
+			logf("BBR POST -> DONE after: cong=%s qdisc=%s", afterCong, afterQdisc)
 			writeJSON(w, APIResponse{Success: true, Message: "BBR 已关闭"})
 		}
 
