@@ -24,6 +24,7 @@ on:
         default: ''
 
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   WHITELIST: "emby firefox jellyfin moviepilot openlist plex qbittorrent"
 
 jobs:
