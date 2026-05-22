@@ -211,6 +211,122 @@ func handleQdiscApply(w http.ResponseWriter, r *http.Request) {
 	ifaces := getPhysicalIfaces()
 	logf("QDISC APPLY -> applying fq to %d interfaces: %v", len(ifaces), ifaces)
 
+		var results []string
+		for _, iface := range ifaces {
+			_, rootErr := exec.Command("tc", "qdisc", "replace", "dev", iface, "root", "fq").CombinedOutput()
+			if rootErr != nil {
+				classes, _ := exec.Command("sh", "-c",
+					fmt.Sprintf("tc class show dev %s | grep -oP 'parent \K:\d+'", iface)).Output()
+				for _, cls := range strings.Fields(string(classes)) {
+					exec.Command("tc", "qdisc", "replace", "dev", iface, "parent", cls, "fq").Run()
+				}
+			}
+			msg := fmt.Sprintf("%s: 已切换为 fq", iface)
+			logf("QDISC APPLY -> %s", msg)
+			results = append(results, msg)
+		}
+		writeJSON(w, APIResponse{Success: true, Data: status})
+
+	case "POST":
+		var req struct {
+			Enable bool `json:"enable"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			logf("BBR POST -> invalid request body")
+			writeJSON(w, APIResponse{Success: false, Message: "无效请求"})
+			return
+		}
+
+		beforeCong, _ := sysctlGet("net.ipv4.tcp_congestion_control")
+		beforeQdisc, _ := sysctlGet("net.core.default_qdisc")
+		logf("BBR POST enable=%v before: cong=%s qdisc=%s", req.Enable, beforeCong, beforeQdisc)
+
+		if req.Enable {
+			if err := writeSysctlConf("net.core.default_qdisc", "fq"); err != nil {
+				logf("BBR POST -> write sysctl.conf fq FAILED: %v", err)
+				writeJSON(w, APIResponse{Success: false, Message: "写入 sysctl.conf 失败: " + err.Error()})
+				return
+			}
+			if err := writeSysctlConf("net.ipv4.tcp_congestion_control", "bbr"); err != nil {
+				logf("BBR POST -> write sysctl.conf bbr FAILED: %v", err)
+				writeJSON(w, APIResponse{Success: false, Message: "写入 sysctl.conf 失败: " + err.Error()})
+				return
+			}
+			if out, err := exec.Command("modprobe", "tcp_bbr").CombinedOutput(); err != nil {
+				logf("BBR POST -> modprobe tcp_bbr FAILED: %s", strings.TrimSpace(string(out)))
+				writeJSON(w, APIResponse{Success: false, Message: "BBR 模块加载失败: " + string(out)})
+				return
+			}
+			logf("BBR POST -> modprobe tcp_bbr OK")
+			exec.Command("sysctl", "-p").Run()
+			exec.Command("sysctl", "-w", "net.core.default_qdisc=fq").Run()
+			exec.Command("sysctl", "-w", "net.ipv4.tcp_congestion_control=bbr").Run()
+
+			afterCong, _ := sysctlGet("net.ipv4.tcp_congestion_control")
+			afterQdisc, _ := sysctlGet("net.core.default_qdisc")
+			logf("BBR POST -> DONE after: cong=%s qdisc=%s", afterCong, afterQdisc)
+			writeJSON(w, APIResponse{Success: true, Message: "BBR 已开启，重启后仍然生效"})
+		} else {
+			removeSysctlConf("net.core.default_qdisc=fq")
+			removeSysctlConf("net.ipv4.tcp_congestion_control=bbr")
+			logf("BBR POST -> removed from sysctl.conf")
+			exec.Command("sysctl", "-p").Run()
+			exec.Command("sysctl", "-w", "net.ipv4.tcp_congestion_control=cubic").Run()
+
+			afterCong, _ := sysctlGet("net.ipv4.tcp_congestion_control")
+			logf("BBR POST -> DONE after: cong=%s", afterCong)
+			writeJSON(w, APIResponse{Success: true, Message: "BBR 已关闭"})
+		}
+
+	default:
+		logf("BBR -> method not allowed: %s", r.Method)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func handleHosts(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		data, err := os.ReadFile("/etc/hosts")
+		if err != nil {
+			logf("HOSTS GET -> read FAILED: %v", err)
+			writeJSON(w, APIResponse{Success: false, Message: "读取 hosts 失败: " + err.Error()})
+			return
+		}
+		logf("HOSTS GET -> read %d bytes", len(data))
+		writeJSON(w, APIResponse{Success: true, Data: HostsData{Content: string(data)}})
+
+	case "POST":
+		var req HostsData
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			logf("HOSTS POST -> invalid request body")
+			writeJSON(w, APIResponse{Success: false, Message: "无效请求"})
+			return
+		}
+		logf("HOSTS POST -> writing %d bytes to /etc/hosts", len(req.Content))
+		if err := os.WriteFile("/etc/hosts", []byte(req.Content), 0644); err != nil {
+			logf("HOSTS POST -> write FAILED: %v", err)
+			writeJSON(w, APIResponse{Success: false, Message: "写入 hosts 失败: " + err.Error()})
+			return
+		}
+		logf("HOSTS POST -> write OK")
+		writeJSON(w, APIResponse{Success: true, Message: "hosts 已保存"})
+
+	default:
+		logf("HOSTS -> method not allowed: %s", r.Method)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func handleQdiscApply(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	ifaces := getPhysicalIfaces()
+	logf("QDISC APPLY -> applying fq to %d interfaces: %v", len(ifaces), ifaces)
+
 	var results []string
 	for _, iface := range ifaces {
 		out, err := exec.Command("tc", "qdisc", "replace", "dev", iface, "root", "fq").CombinedOutput()
@@ -254,7 +370,7 @@ func getPhysicalIfaces() []string {
 	return ifaces
 }
 
-nfunc allIfacesFq() bool {
+func allIfacesFq() bool {
 	for _, iface := range getPhysicalIfaces() {
 		out, err := exec.Command("tc", "-j", "qdisc", "show", "dev", iface).Output()
 		if err != nil {
