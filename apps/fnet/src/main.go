@@ -202,8 +202,6 @@ func handleHosts(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
-
 func handleQdiscApply(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -215,17 +213,16 @@ func handleQdiscApply(w http.ResponseWriter, r *http.Request) {
 
 	var results []string
 	for _, iface := range ifaces {
-		_, rootErr := exec.Command("tc", "qdisc", "replace", "dev", iface, "root", "fq").CombinedOutput()
-		if rootErr != nil {
-			cmd := fmt.Sprintf("tc class show dev %s | grep -oP 'parent \K:\d+'", iface)
-			classes, _ := exec.Command("sh", "-c", cmd).Output()
-			for _, cls := range strings.Fields(string(classes)) {
-				exec.Command("tc", "qdisc", "replace", "dev", iface, "parent", cls, "fq").Run()
-			}
+		out, err := exec.Command("tc", "qdisc", "replace", "dev", iface, "root", "fq").CombinedOutput()
+		if err != nil {
+			msg := fmt.Sprintf("%s: 失败 - %s", iface, strings.TrimSpace(string(out)))
+			logf("QDISC APPLY -> %s", msg)
+			results = append(results, msg)
+		} else {
+			msg := fmt.Sprintf("%s: 已切换为 fq", iface)
+			logf("QDISC APPLY -> %s", msg)
+			results = append(results, msg)
 		}
-		msg := fmt.Sprintf("%s: 已切换为 fq", iface)
-		logf("QDISC APPLY -> %s", msg)
-		results = append(results, msg)
 	}
 
 	writeJSON(w, APIResponse{
@@ -257,7 +254,7 @@ func getPhysicalIfaces() []string {
 	return ifaces
 }
 
-func allIfacesFq() bool {
+nfunc allIfacesFq() bool {
 	for _, iface := range getPhysicalIfaces() {
 		out, err := exec.Command("tc", "-j", "qdisc", "show", "dev", iface).Output()
 		if err != nil {
