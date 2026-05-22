@@ -41,9 +41,11 @@ func main() {
 	mux.HandleFunc("/api/bbr", handleBBR)
 	mux.HandleFunc("/api/hosts", handleHosts)
 	mux.HandleFunc("/api/qdisc/apply", handleQdiscApply)
+	mux.HandleFunc("/api/qdisc/reset", handleQdiscReset)
 	mux.HandleFunc("/app/fnet/api/bbr", handleBBR)
 	mux.HandleFunc("/app/fnet/api/hosts", handleHosts)
 	mux.HandleFunc("/app/fnet/api/qdisc/apply", handleQdiscApply)
+	mux.HandleFunc("/app/fnet/api/qdisc/reset", handleQdiscReset)
 
 	// Static files — gateway forwards /app/fnet to the socket
 	staticFS, _ := fs.Sub(staticFiles, "static")
@@ -221,6 +223,35 @@ func handleQdiscApply(w http.ResponseWriter, r *http.Request) {
 		} else {
 			msg := fmt.Sprintf("%s: 已切换为 fq", iface)
 			logf("QDISC APPLY -> %s", msg)
+			results = append(results, msg)
+		}
+	}
+
+	writeJSON(w, APIResponse{
+		Success: true,
+		Message: strings.Join(results, "\n"),
+	})
+}
+
+func handleQdiscReset(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	ifaces := getPhysicalIfaces()
+	logf("QDISC RESET -> resetting to pfifo_fast on %d interfaces: %v", len(ifaces), ifaces)
+
+	var results []string
+	for _, iface := range ifaces {
+		out, err := exec.Command("tc", "qdisc", "replace", "dev", iface, "root", "pfifo_fast").CombinedOutput()
+		if err != nil {
+			msg := fmt.Sprintf("%s: 失败 - %s", iface, strings.TrimSpace(string(out)))
+			logf("QDISC RESET -> %s", msg)
+			results = append(results, msg)
+		} else {
+			msg := fmt.Sprintf("%s: 已恢复为 pfifo_fast", iface)
+			logf("QDISC RESET -> %s", msg)
 			results = append(results, msg)
 		}
 	}
