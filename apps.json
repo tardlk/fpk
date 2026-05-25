@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-25T01:58:54Z",
+  "generated_at": "2026-05-25T02:17:08Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -13,8 +13,8 @@
       "display_name": "Alist",
       "description": "网盘聚合工具，支持挂载阿里云盘、百度网盘等多种网络存储到本地。",
       "version": "3.60.0",
-      "fpk_version": "3.60.0",
-      "release_tag": "alist/v3.60.0",
+      "fpk_version": "3.60.0-r1",
+      "release_tag": "alist/v3.60.0-r1",
       "service_port": 5246,
       "homepage_url": "https://github.com/AlistGo/alist",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/alist/fnos/ICON_256.PNG",
@@ -22,7 +22,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-25T01:58:45Z",
+      "updated_at": "2026-05-25T02:16:58Z",
       "download_count": 0,
       "app_type": "native",
       "category": "download"
