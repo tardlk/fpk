@@ -21,13 +21,3 @@ service_preuninst() {
 service_poststop() {
     service_preuninst
 }
-
-# Write wizard credentials for alist-server to pick up on first start
-service_postinst() {
-    if [ -z "${wizard_username:-}" ] && [ -z "${wizard_password:-}" ]; then
-        return 0
-    fi
-    mkdir -p "$APP_DATA_DIR"
-    echo "USER=${wizard_username:-admin}" > "$APP_DATA_DIR/.wizard"
-    echo "PASS=${wizard_password}" >> "$APP_DATA_DIR/.wizard"
-}
