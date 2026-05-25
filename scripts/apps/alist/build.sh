@@ -24,5 +24,8 @@ cp apps/alist/fnos/bin/alist-server app_root/bin/alist-server
 chmod +x app_root/bin/alist-server
 cp -a apps/alist/fnos/ui/* app_root/ui/ 2>/dev/null || true
 
+# Seed config: var/data/config.json with placeholders → replaced on first run
+cp -a apps/alist/var app_root/ 2>/dev/null || true
+
 cd app_root
 tar -czf ../app.tgz .
