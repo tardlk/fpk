@@ -10,6 +10,25 @@ SERVICE_COMMAND="$APP_DIR/bin/alist-server $APP_DATA_DIR"
 SVC_BACKGROUND=y
 SVC_WRITE_PID=y
 
+# Override: persist wizard credentials to installer-variables
+save_wizard_variables() {
+    if [ -e "${INST_VARIABLES}" ]; then
+        $RM "${INST_VARIABLES}"
+    fi
+    if [ -n "${GROUP}" ]; then
+        echo "GROUP=${GROUP}" >> ${INST_VARIABLES}
+    fi
+    if [ -n "${SHARE_PATH}" ]; then
+        echo "SHARE_PATH=${SHARE_PATH}" >> ${INST_VARIABLES}
+    fi
+    if [ -n "${wizard_username:-}" ]; then
+        echo "wizard_username=${wizard_username}" >> ${INST_VARIABLES}
+    fi
+    if [ -n "${wizard_password:-}" ]; then
+        echo "wizard_password=${wizard_password}" >> ${INST_VARIABLES}
+    fi
+}
+
 service_preuninst() {
     # 兜底：确保 alist 进程被完全终止
     # 使用 -x 精确匹配进程名，避免误杀 appcenter-cli 等包含 "alist" 参数的进程
