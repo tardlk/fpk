@@ -1,0 +1,22 @@
+[
+    {
+        "stepTitle": "管理员设置",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "Alist 网盘聚合工具，支持挂载阿里云盘、百度网盘等。<br><br><b>仅在首次安装时生效</b>，重新安装但不删除数据则不会重置。"
+            },
+            {
+                "type": "text",
+                "field": "wizard_username",
+                "label": "管理员用户名（留空默认 admin）",
+                "placeholder": "admin"
+            },
+            {
+                "type": "password",
+                "field": "wizard_password",
+                "label": "管理员密码（留空则随机生成，首次启动后可查看日志获取）"
+            }
+        ]
+    }
+]

@@ -11,4 +11,30 @@ if [ -f "$CONFIG_FILE" ] && grep -q "__TRIM_SERVICE_PORT__" "$CONFIG_FILE"; then
 fi
 
 cd "$APP_DIR" || exit 1
+
+# First install: set admin credentials from wizard
+INST_VARS="/var/apps/${TRIM_APPNAME}/etc/installer-variables"
+if [ -f "$INST_VARS" ]; then
+    wizard_username=""; wizard_password=""
+    . "$INST_VARS"
+    if [ -n "${wizard_username:-}" ] || [ -n "${wizard_password:-}" ]; then
+        ALIST_USER="${wizard_username:-admin}"
+        ALIST_PASS="${wizard_password}"
+        # Start alist briefly to initialize DB
+        ./alist server --data "$APP_DATA_DIR/data" > /dev/null 2>&1 &
+        ALIST_PID=$!
+        sleep 2
+        # Set credentials (alist admin reads ./data by default, symlink it)
+        if [ -n "$ALIST_PASS" ]; then
+            ln -sf "$APP_DATA_DIR/data" data
+            ./alist admin set "$ALIST_USER" "$ALIST_PASS"
+            rm -f data
+        fi
+        # Stop temporary instance
+        kill "$ALIST_PID" 2>/dev/null
+        wait "$ALIST_PID" 2>/dev/null
+        sleep 1
+    fi
+fi
+
 exec ./alist server --data "$APP_DATA_DIR/data"
