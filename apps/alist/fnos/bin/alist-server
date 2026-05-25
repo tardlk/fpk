@@ -8,27 +8,21 @@ mkdir -p "$APP_DATA_DIR/data"
 if [ -f "$CONFIG_FILE" ] && grep -q "__TRIM_SERVICE_PORT__" "$CONFIG_FILE"; then
     JWT_SECRET="$(head -c 32 /dev/urandom | base64 | tr -d '\n' | tr -d '+/' | head -c 32)"
     sed -i "s|__TRIM_SERVICE_PORT__|${TRIM_SERVICE_PORT:-5246}|g; s|__JWT_SECRET__|${JWT_SECRET}|g" "$CONFIG_FILE"
+
+    cd "$APP_DIR" || exit 1
+
+    # First install: init DB and set default password
+    ./alist server --data "$APP_DATA_DIR/data" > /dev/null 2>&1 &
+    ALIST_PID=$!
+    sleep 2
+    rm -rf data 2>/dev/null
+    ln -sf "$APP_DATA_DIR/data" data
+    ./alist admin set password 2>/dev/null
+    rm -rf data 2>/dev/null
+    kill "$ALIST_PID" 2>/dev/null
+    wait "$ALIST_PID" 2>/dev/null
+    sleep 1
 fi
 
 cd "$APP_DIR" || exit 1
-
-# First install: set admin credentials from wizard
-INST_VARS="/var/apps/${TRIM_APPNAME}/etc/installer-variables"
-if [ -f "$INST_VARS" ]; then
-    wizard_username=""; wizard_password=""
-    . "$INST_VARS"
-    if [ -n "${wizard_password:-}" ]; then
-        ./alist server --data "$APP_DATA_DIR/data" > /dev/null 2>&1 &
-        ALIST_PID=$!
-        sleep 2
-        rm -rf data 2>/dev/null
-        ln -sf "$APP_DATA_DIR/data" data
-        ./alist admin set "$wizard_password" 2>/dev/null
-        rm -rf data 2>/dev/null
-        kill "$ALIST_PID" 2>/dev/null
-        wait "$ALIST_PID" 2>/dev/null
-        sleep 1
-    fi
-fi
-
 exec ./alist server --data "$APP_DATA_DIR/data"
