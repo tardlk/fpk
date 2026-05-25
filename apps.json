@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-25T11:56:43Z",
+  "generated_at": "2026-05-25T11:57:34Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -96,9 +96,9 @@
       "file_prefix": "jellyfin",
       "display_name": "Jellyfin",
       "description": "Jellyfin 是一款免费开源的媒体系统，让您管理和播放您的媒体内容。支持电影、电视剧、音乐等多种媒体类型的管理和流式传输。",
-      "version": "10.11.9",
-      "fpk_version": "10.11.9",
-      "release_tag": "jellyfin/v10.11.9",
+      "version": "10.11.10",
+      "fpk_version": "10.11.10",
+      "release_tag": "jellyfin/v10.11.10",
       "service_port": 18096,
       "homepage_url": "https://jellyfin.org",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/jellyfin/fnos/ICON_256.PNG",
@@ -106,7 +106,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-22T10:56:35Z",
+      "updated_at": "2026-05-25T11:57:26Z",
       "download_count": 0,
       "app_type": "native",
       "category": "media"
