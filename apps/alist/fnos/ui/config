@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "alist.Application":
+        {
+            "title": "Alist",
+            "desc": "Alist Network Drive Aggregator",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "5246",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

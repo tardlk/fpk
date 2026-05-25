@@ -1,0 +1,19 @@
+{
+    "port-config": {
+        "protocol-file": "Alist.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "Alist",
+                "permission": {
+                    "rw": [
+                        "alist"
+                    ]
+                }
+            }
+        ]
+    },
+    "systemd-unit": {
+    }
+}
