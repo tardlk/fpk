@@ -9,6 +9,6 @@ distributor_url = https://github.com/tardlk/fpk
 desktop_uidir   = ui
 desktop_applaunchname = alist.Application
 service_port    = 5246
-desc            = 网盘聚合工具，支持挂载阿里云盘、百度网盘等多种网络存储到本地。
+desc            = 网盘聚合工具，支持挂载阿里云盘、百度网盘等。默认用户名 admin，密码 password。
 source          = thirdparty
 checksum        = 
