@@ -22,7 +22,7 @@ if [ -f "$INST_VARS" ]; then
         ALIST_PID=$!
         sleep 2
         ln -sfn "$APP_DATA_DIR/data" data 2>/dev/null
-        ./alist admin set "${wizard_username:-admin}" "$wizard_password" 2>/dev/null
+        ./alist admin set "$wizard_password" 2>/dev/null
         rm -rf data 2>/dev/null
         kill "$ALIST_PID" 2>/dev/null
         wait "$ALIST_PID" 2>/dev/null
