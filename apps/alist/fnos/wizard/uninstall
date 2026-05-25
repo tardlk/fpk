@@ -1,0 +1,25 @@
+[{
+  "stepTitle": "卸载 Alist",
+  "items": [
+    {
+    "type": "tips",
+    "helpText": "卸载不会删除网盘挂载配置。"
+    },
+    {
+      "type":"radio",
+      "field": "wizard_delete_data",
+      "label": "仅卸载（推荐）",
+      "initValue": "false",
+      "options":[
+        {
+             "label": "保留现有文件",
+                "value": "false"
+            },
+            {
+                "label": "清除所有套件数据文件（不可恢复）！！！",
+                "value": "true"
+            }
+      ]
+    }
+    ]
+}]
