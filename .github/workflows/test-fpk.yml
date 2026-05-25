@@ -25,7 +25,7 @@ on:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  WHITELIST: "emby firefox jellyfin moviepilot openlist plex qbittorrent"
+  WHITELIST: "alist emby fnet firefox jellyfin moviepilot openlist plex qbittorrent"
 
 jobs:
   detect:

@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-精选 fnOS 第三方应用打包仓库，8 个应用。Pure bash — 下载上游二进制，合并共享生命周期框架，输出 `.fpk`。CI 每日自动同步上游版本。
+精选 fnOS 第三方应用打包仓库，9 个应用。Pure bash — 下载上游二进制，合并共享生命周期框架，输出 `.fpk`。CI 每日自动同步上游版本。
 
 ## STRUCTURE
 
@@ -18,6 +18,7 @@ fpk/
 │   ├── qbittorrent/     # qBittorrent BT 客户端 (8085, 静态二进制)
 │   ├── openlist/        # OpenList 文件列表 (5244, Go 单二进制)
 │   ├── fnet/            # FNet 网络优化 (Unix socket, Go)
+│   ├── alist/           # Alist 网盘聚合 (5246, Go 单二进制)
 │   ├── firefox/         # Firefox 远程浏览器 (5801, Docker)
 │   └── moviepilot/      # MoviePilot 影视管理 (3000, Docker)
 ├── scripts/
@@ -48,6 +49,7 @@ fpk/
 - **Firefox**: Docker，VNC 密码通过 wizard 设置
 - **MoviePilot**: Docker v2，${wizard_password} compose 变量替换
 - **FNet**: Go 编译，Unix socket 通信，BBR 开关 + hosts 编辑
+- **Alist**: Go 单二进制，种子配置占位符替换，非 root 运行
 
 ## CONVENTIONS
 

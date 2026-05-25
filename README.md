@@ -11,6 +11,7 @@
 | **Jellyfin** | 8097 | Native | 开源媒体系统，内置 FFmpeg |
 | **qBittorrent** | 8085 | Native | BT 客户端，默认 admin/adminadmin |
 | **OpenList** | 5244 | Native | 文件列表 / WebDAV 服务器 |
+| **Alist** | 5246 | Native | 网盘聚合，挂载阿里云盘、百度网盘等 |
 | **FNet** | N/A | Native | 网络优化，BBR 拥塞控制 + hosts 编辑 |
 | **Firefox** | 5801 | Docker | 远程浏览器，中文支持，可设 VNC 密码 |
 | **MoviePilot** | 3000 | Docker | 影视自动化管理，默认 admin/password |
