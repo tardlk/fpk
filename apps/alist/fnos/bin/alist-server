@@ -11,4 +11,27 @@ if [ -f "$CONFIG_FILE" ] && grep -q "__TRIM_SERVICE_PORT__" "$CONFIG_FILE"; then
 fi
 
 cd "$APP_DIR" || exit 1
+
+# First install: apply wizard credentials if present
+WIZARD_FILE="$APP_DATA_DIR/.wizard"
+if [ -f "$WIZARD_FILE" ]; then
+    # Start alist briefly to init DB
+    ./alist server --data "$APP_DATA_DIR/data" > /dev/null 2>&1 &
+    ALIST_PID=$!
+    sleep 2
+
+    WIZ_USER="admin"; WIZ_PASS=""
+    . "$WIZARD_FILE"
+    if [ -n "$WIZ_PASS" ] && [ "$WIZ_PASS" != "null" ]; then
+        ln -sfn "$APP_DATA_DIR/data" data 2>/dev/null
+        ./alist admin set "$WIZ_USER" "$WIZ_PASS" 2>/dev/null
+        rm -rf data 2>/dev/null
+    fi
+
+    kill "$ALIST_PID" 2>/dev/null
+    wait "$ALIST_PID" 2>/dev/null
+    rm -f "$WIZARD_FILE"
+    sleep 1
+fi
+
 exec ./alist server --data "$APP_DATA_DIR/data"

@@ -22,32 +22,12 @@ service_poststop() {
     service_preuninst
 }
 
-# First install: init config + set admin credentials from wizard
+# Write wizard credentials for alist-server to pick up on first start
 service_postinst() {
     if [ -z "${wizard_username:-}" ] && [ -z "${wizard_password:-}" ]; then
         return 0
     fi
-
-    CONFIG_FILE="$APP_DATA_DIR/data/config.json"
-    if [ -f "$CONFIG_FILE" ] && grep -q "__TRIM_SERVICE_PORT__" "$CONFIG_FILE"; then
-        JWT_SECRET="$(head -c 32 /dev/urandom | base64 | tr -d '\n' | tr -d '+/' | head -c 32)"
-        sed -i "s|__TRIM_SERVICE_PORT__|${TRIM_SERVICE_PORT:-5246}|g; s|__JWT_SECRET__|${JWT_SECRET}|g" "$CONFIG_FILE"
-    fi
-
-    cd "$APP_DIR" || return
-    ./alist server --data "$APP_DATA_DIR/data" > /dev/null 2>&1 &
-    ALIST_PID=$!
-    sleep 2
-
-    ALIST_USER="${wizard_username:-admin}"
-    ALIST_PASS="${wizard_password}"
-    if [ -n "$ALIST_PASS" ]; then
-        ln -sf "$APP_DATA_DIR/data" data
-        ./alist admin set "$ALIST_USER" "$ALIST_PASS"
-        rm -f data
-    fi
-
-    kill "$ALIST_PID" 2>/dev/null
-    wait "$ALIST_PID" 2>/dev/null
-    sleep 1
+    mkdir -p "$APP_DATA_DIR"
+    echo "USER=${wizard_username:-admin}" > "$APP_DATA_DIR/.wizard"
+    echo "PASS=${wizard_password}" >> "$APP_DATA_DIR/.wizard"
 }
