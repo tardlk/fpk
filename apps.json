@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-08T12:38:30Z",
+  "generated_at": "2026-06-11T12:13:52Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -117,9 +117,9 @@
       "file_prefix": "moviepilot",
       "display_name": "MoviePilot",
       "description": "影视自动化管理工具，支持自动订阅、下载、整理和通知。Web UI 端口 4000，API 端口 4001。默认管理员 admin/password（可自定义）。配置时下载目录填 /downloads，媒体库目录填 /media。使用自定义目录需在应用设置中授权。",
-      "version": "2.13.6",
-      "fpk_version": "2.13.6",
-      "release_tag": "moviepilot/v2.13.6",
+      "version": "2.13.7",
+      "fpk_version": "2.13.7",
+      "release_tag": "moviepilot/v2.13.7",
       "service_port": 4000,
       "homepage_url": "https://github.com/jxxghp/MoviePilot",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/moviepilot/fnos/ICON_256.PNG",
@@ -127,7 +127,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-06-08T12:38:19Z",
+      "updated_at": "2026-06-11T12:13:38Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content",
@@ -150,7 +150,7 @@
         "arm"
       ],
       "updated_at": "2026-05-27T11:45:52Z",
-      "download_count": 3,
+      "download_count": 4,
       "app_type": "native",
       "category": "content"
     },
