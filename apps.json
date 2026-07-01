@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-01T11:28:44Z",
+  "generated_at": "2026-07-01T11:28:56Z",
   "source": {
     "name": "tardlk/fpk",
     "url": "https://github.com/tardlk/fpk"
@@ -139,9 +139,9 @@
       "file_prefix": "openlist",
       "display_name": "OpenList",
       "description": "支持多种存储后端的文件列表/WebDAV 程序（AList 社区分支）",
-      "version": "4.2.2",
-      "fpk_version": "4.2.2",
-      "release_tag": "openlist/v4.2.2",
+      "version": "4.2.3",
+      "fpk_version": "4.2.3",
+      "release_tag": "openlist/v4.2.3",
       "service_port": 5244,
       "homepage_url": "https://github.com/OpenListTeam/OpenList",
       "icon_url": "https://raw.githubusercontent.com/tardlk/fpk/main/apps/openlist/fnos/ICON_256.PNG",
@@ -149,7 +149,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-05-27T11:45:52Z",
+      "updated_at": "2026-07-01T11:28:47Z",
       "download_count": 4,
       "app_type": "native",
       "category": "content"
